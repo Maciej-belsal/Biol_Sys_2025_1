@@ -67,7 +67,7 @@ def plot_phys_space(population, generation, save_path=None, show_plot=True):
 
 def plot_bars(quants, title, xlabel, ylabel, filename, categories):
 
-    plt.bar(categories, quants)
+    plt.bar(categories, [q[0]/max(q[1],1) for q in quants])
     plt.title(title)
     plt.xlabel(xlabel)
     plt.ylabel(ylabel)
