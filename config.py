@@ -45,7 +45,7 @@ alpha0 = np.array([0.0, 0.0])
 c = np.array([0.0, 0.0])
 cc = np.array([0.5,0.5])
 delta = 0    # odchylenie standardowe dla fluktuacji
-max_generations = 1000  # liczba pokoleń do zasymulowania
+max_generations = 2000  # liczba pokoleń do zasymulowania
 
 # ----------------------
 # PARAMETRY REPRODUKCJI

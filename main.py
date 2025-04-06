@@ -198,11 +198,11 @@ def main():
 
     plot_bars(avg_spawn_rate, "Average spawn rate per sector", "Sectors", "Spawn rate (new spawned/old total)", "avg_spawn_rate", categories)
     plot_bars(avg_mut_rate, "Average mutation rate per sector", "Sectors", "Mutation rate (Mutated/population)", "avg_mut_rate", categories)
-    plot_bars(avg_mut_rate, "Average death rate per sector", "Sectors", "Death rate (Dead/population)", "avg_death_rate", categories)
+    plot_bars(avg_death_rate, "Average death rate per sector", "Sectors", "Death rate (Dead/population)", "avg_death_rate", categories)
 
-    plot_lines(avg_spawn_rate, "Spawn rates in time", "Time or generations", "Spawn rate", "spawn_rates", categories)
-    plot_lines(avg_spawn_rate, "Mutation rates in time", "Time or generations", "Mutation rate", "mut_rates", categories)
-    plot_lines(avg_spawn_rate, "Death rates in time", "Time or generations", "Death rate", "death_rates", categories)
+    plot_lines(spawn_rate_t, "Spawn rates in time", "Time or generations", "Spawn rate", "spawn_rates", categories)
+    plot_lines(mut_rate_t, "Mutation rates in time", "Time or generations", "Mutation rate", "mut_rates", categories)
+    plot_lines(death_rate_t, "Death rates in time", "Time or generations", "Death rate", "death_rates", categories)
 
     plot_line(all_spawn_rates, "Total spawn rate in time", "Time or generations", "Spawn rate", "spawn_rate")
     plot_line(all_mut_rates, "Total mutation rate in time", "Time or generations", "Mutation rate", "mut_rate")
