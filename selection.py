@@ -1,6 +1,8 @@
 # selection.py
 
 import numpy as np
+import config
+
 
 def fitness_function(phenotype, alpha, sigma):
     """
@@ -13,14 +15,14 @@ def fitness_function(phenotype, alpha, sigma):
     dist_sq = np.sum(diff**2)
     return np.exp(-dist_sq / (2 * sigma**2))
 
-def proportional_selection(population, alpha, sigma, N):
+def proportional_selection(population, alpha, sigma, current_pop, carbon):
     """
     Model proporcjonalny: 
       - P(rozmnożenia) = fitness / suma fitnessów
       - Generujemy nową populację wielkości N.
     """
     individuals = population.get_individuals()
-    fitnesses = [fitness_function(ind.get_phenotype(), alpha, sigma) for ind in individuals]
+    fitnesses = [fitness_function(ind.get_phenotype(), alpha, sigma*(carbon/config.carbon)) for ind in individuals]
     total_fitness = sum(fitnesses)
     if total_fitness == 0:
         # Jeśli całkowite fitness jest 0, to każdy osobnik dostaje równą szansę
@@ -29,13 +31,16 @@ def proportional_selection(population, alpha, sigma, N):
         probabilities = [f / total_fitness for f in fitnesses]
 
     new_individuals = []
-    for _ in range(N):
-        chosen_idx = np.random.choice(range(len(individuals)), p=probabilities)
-        new_individuals.append(individuals[chosen_idx])
+    for _ in range(min(current_pop, config.maxN-current_pop)):
+        if np.random.rand() < config.carbon/carbon:
+            chosen_idx = np.random.choice(range(len(individuals)), p=probabilities) # już nie/ tu gdzieś dodać mutate dla dzieci
+            new_individuals.append(individuals[chosen_idx])
 
-    population.set_individuals(new_individuals)
+    #population.set_individuals(new_individuals)
+    #population.add_individuals(new_individuals)
+    return new_individuals
 
-def threshold_selection(population, alpha, sigma, threshold):
+def threshold_selection(population, alpha, sigma, threshold, carbon):
     """
     Model progowy:
       - Eliminujemy osobniki, których fitness < threshold.
@@ -45,7 +50,7 @@ def threshold_selection(population, alpha, sigma, threshold):
     individuals = population.get_individuals()
     survivors = []
     for ind in individuals:
-        f = fitness_function(ind.get_phenotype(), alpha, sigma)
+        f = fitness_function(ind.get_phenotype(), alpha, sigma*(carbon/config.carbon))
         if f >= threshold:
             survivors.append(ind)
     return survivors
