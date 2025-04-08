@@ -118,12 +118,12 @@ def main():
     #spawn_start = [[0] for s in range(int(config.plate_length/config.sector_length))]
     mut_rate_t = [[0] for s in range(int(config.plate_length/config.sector_length))]
     #mut_start = [[0] for s in range(int(config.plate_length/config.sector_length))]
-    death_rate_t = [[0] for s in range(int(config.plate_length/config.sector_length))]
+    death_rate_t = [[] for s in range(int(config.plate_length/config.sector_length))]
     #death_start = [[0] for s in range(int(config.plate_length/config.sector_length))]
 
     all_spawn_rates = [0]
     all_mut_rates = [0]
-    all_death_rates = [0]
+    all_death_rates = []
 
 
 
@@ -164,20 +164,28 @@ def main():
 
         pop, spawn, mut, death, og_pop = dish.run_all()
 
-        all_spawn_rates.append(int(sum(spawn)/len(dish.get_population())))
-        all_mut_rates.append(int(sum(mut)/len(dish.get_population())))
-        all_death_rates.append(int(sum(death)/len(dish.get_population())))
+        #print("spawn =",spawn)
+        #print("or",sum(spawn),"?")
+
+        all_spawn_rates.append(float(sum(spawn)/len(dish.get_population())))
+        #print(all_spawn_rates)
+        all_mut_rates.append(float(sum(mut)/len(dish.get_population())))
+        #print(all_mut_rates)
+        all_death_rates.append(float(sum(death)/len(dish.get_population())))
+        #print(all_death_rates)
+
+        #print(avg_death_rate)
 
         for s_i, s_pop in enumerate(pop) :
             if s_pop > 0:
                 avg_spawn_rate[s_i][0] = avg_spawn_rate[s_i][0] + spawn[s_i]/og_pop[s_i]
-                avg_spawn_rate[s_i][1] = avg_spawn_rate[s_i][0] + 1
+                avg_spawn_rate[s_i][1] = avg_spawn_rate[s_i][1] + 1
 
                 avg_mut_rate[s_i][0] = avg_mut_rate[s_i][0] + mut[s_i]/og_pop[s_i]
-                avg_mut_rate[s_i][1] = avg_mut_rate[s_i][0] + 1
+                avg_mut_rate[s_i][1] = avg_mut_rate[s_i][1] + 1
 
                 avg_death_rate[s_i][0] = avg_death_rate[s_i][0] + death[s_i]/og_pop[s_i]
-                avg_death_rate[s_i][1] = avg_death_rate[s_i][0] + 1
+                avg_death_rate[s_i][1] = avg_death_rate[s_i][1] + 1
 
                 spawn_rate_t[s_i].append(spawn[s_i]/og_pop[s_i])
                 mut_rate_t[s_i].append(mut[s_i]/og_pop[s_i])
@@ -189,12 +197,20 @@ def main():
                 mut_rate_t[s_i].append(0)
                 death_rate_t[s_i].append(0)
 
+        #print(all_spawn_rates)
+        #print(avg_spawn_rate)
+
+        #print(avg_death_rate)
+
+
 
 
 
     categories = ["sector 0", "sector 1", "sector 2", "sector 3", "sector 4"]
 
-
+    plot_line(all_spawn_rates, "Total spawn rate in time", "Time or generations", "Spawn rate", "all_spawn_rate")
+    plot_line(all_mut_rates, "Total mutation rate in time", "Time or generations", "Mutation rate", "all_mut_rate")
+    plot_line(all_death_rates, "Total death rate in time", "Time or generations", "Death rate", "all_death_rate")
 
     plot_bars(avg_spawn_rate, "Average spawn rate per sector", "Sectors", "Spawn rate (new spawned/old total)", "avg_spawn_rate", categories)
     plot_bars(avg_mut_rate, "Average mutation rate per sector", "Sectors", "Mutation rate (Mutated/population)", "avg_mut_rate", categories)
@@ -204,9 +220,6 @@ def main():
     plot_lines(mut_rate_t, "Mutation rates in time", "Time or generations", "Mutation rate", "mut_rates", categories)
     plot_lines(death_rate_t, "Death rates in time", "Time or generations", "Death rate", "death_rates", categories)
 
-    plot_line(all_spawn_rates, "Total spawn rate in time", "Time or generations", "Spawn rate", "spawn_rate")
-    plot_line(all_mut_rates, "Total mutation rate in time", "Time or generations", "Mutation rate", "mut_rate")
-    plot_line(all_death_rates, "Total death rate in time", "Time or generations", "Death rate", "death_rate")
 
     print("Symulacja zakończona. Tworzenie GIF-a...")
 

@@ -4,6 +4,7 @@ import matplotlib.pyplot as plt
 import numpy as np
 import config
 
+
 def plot_population(population, alpha, generation, save_path=None, show_plot=True):
     """
     Rysuje populację w 2D wraz z optymalnym fenotypem alpha.
@@ -30,6 +31,7 @@ def plot_population(population, alpha, generation, save_path=None, show_plot=Tru
         # Jeśli nie chcesz pokazywać, to zamykaj figurę, 
         # żeby nie zapełniać pamięci
         plt.close()
+
 
 def plot_phys_space(population, generation, save_path=None, show_plot=True):
 
@@ -65,37 +67,55 @@ def plot_phys_space(population, generation, save_path=None, show_plot=True):
         # żeby nie zapełniać pamięci
         plt.close()
 
-def plot_bars(quants, title, xlabel, ylabel, filename, categories):
 
-    plt.bar(categories, [q[0]/max(q[1],1) for q in quants])
+def plot_bars(quants, title, xlab, ylab, filename, categories):
+
+    values = [q[0]/max(q[1],1) for q in quants]
+
+    plt.bar(categories, values)
     plt.title(title)
-    plt.xlabel(xlabel)
-    plt.ylabel(ylabel)
+    plt.xlabel(xlab)
+    plt.ylabel(ylab)
+    plt.tight_layout()
+
+    plt.legend()
 
     plt.savefig(filename)
 
-def plot_lines(quants, title, xlabel, ylabel, filename, categories):
+    plt.clf()
 
 
-    time = range(len(quants[0]))
+def plot_lines(quants, title, xlab, ylab, filename, categories):
 
-    for i, l in enumerate(quants):
-        plt.plot(time, l, marker='.', label = categories[i])
+
+    #time = range(len(quants[0]))
+
+    for l, label in zip(quants, categories):
+        plt.plot(l,label = label)
     plt.title(title)
-    plt.xlabel(xlabel)
-    plt.ylabel(ylabel)
+    plt.xlabel(xlab)
+    plt.ylabel(ylab)
+
+    plt.legend()
 
     plt.savefig(filename)
 
-def plot_line(quants, title, xlabel, ylabel, filename):
+    plt.clf()
 
 
-    time = range(len(quants))
+def plot_line(quants, title, xlab, ylab, filename):
 
 
-    plt.plot(time, quants, marker='.')
+    #time = range(len(quants))
+
+
+    plt.plot(quants)
     plt.title(title)
-    plt.xlabel(xlabel)
-    plt.ylabel(ylabel)
+    plt.xlabel(xlab)
+    plt.ylabel(ylab)
+
+    plt.legend()
 
     plt.savefig(filename)
+
+    plt.clf()

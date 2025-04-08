@@ -21,7 +21,8 @@ def mutate_individual(individual, mu, mu_c, xi):
                 phenotype[i] += np.random.normal(0.0, xi)
         individual.set_phenotype(phenotype)
         return 1
-    return 0
+    else:
+        return 0
 
 def mutate_population(population, mu, mu_c, xi):
     """

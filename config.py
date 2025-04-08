@@ -56,6 +56,6 @@ max_generations = 2000  # liczba pokoleń do zasymulowania
 plate_length = 15 #27
 plate_width = 7 #13
 sector_length = 3
-sigmaa = [1, 0.5, 0.2, 0.1, 0.05]
+sigmaa = [1, 0.5, 0.3, 0.2, 0.1]
 #sigmaa = [0.05, 0.1, 0.2, 0.5, 1]
 #sigmaa = (1, 0.3, 0.1, 0.03, 0.01)
